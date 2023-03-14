@@ -19,7 +19,7 @@ class AudioFileRepresentation:
         self.extract_power_spectrum()
         if not keep_audio:
             del self.audio
-    # end constructor
+    # end init
     
     def extract_power_spectrum(self):
         p = librosa.stft(self.audio, n_fft=2048, hop_length=1024)

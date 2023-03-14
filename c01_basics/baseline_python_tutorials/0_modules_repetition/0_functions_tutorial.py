@@ -38,6 +38,7 @@ print('this is mylist: ' + repr( mylist ) + ' and this is a number: ' + str(a_nu
 
 
 # %%
+# double_this_number(33) # NameError: name 'double_this_number' is not defined
 
 # for nice tutorials on functions:
 # https://www.w3schools.com/python/python_functions.asp
@@ -50,6 +51,7 @@ def double_this_number( x ):
 # %% 
 
 h = double_this_number( 5 )
+print(h)
 print( double_this_number(10) )
 
 # %% 
@@ -84,6 +86,30 @@ fail_to_change_value_of_x()
 print('x value after function has been called: ' + str(x))
 
 # %%
+
+# some basic parts that concern our course
+# global variables
+x = 'I am x'
+s = [1, 2, 3]
+
+# define function that returns nothing - has no arguments
+# the function is simply defined here - it is NOT called
+def succeed_to_change_value_of_x():
+    global x
+    x = 4 # intent to distinguish nested parts
+    print( 'x value inside function: ' + str(x) )
+    # CAUTION: global variables are not affected
+    # each function has its own scope - irrelevant of global
+# function ends here - this comment is not necessary
+
+print('x value before function has been called: ' + str(x))
+# the function is called here
+succeed_to_change_value_of_x()
+print('x value after function has been called: ' + str(x))
+
+# %%
+
+x = 'I am x'
 
 # define function that returns nothing - has arguments
 def fail_to_change_value_of_incoming( t ): # try to use x as argument symbol
@@ -126,10 +152,10 @@ def fun_with_mult_args( a1 , a2 , a3 ):
     return a1 + a2 ** a3 , (a1+a2)**a3
 
 # call function
-r1 , r2 = fun_with_mult_args( 15 , 52 , 36 )
-# r1 , r2 = fun_with_mult_args( a2=15 , a1=52 , a3=36 )
-# _ , r2 = fun_with_mult_args( 1 , 2 , 3 )
-# r = fun_with_mult_args( 1 , 2 , 3 ) # equally valid but returns tuple
+r1 , r2 = fun_with_mult_args( 2 , 3 , 4 )
+# r1 , r2 = fun_with_mult_args( a2=2 , a1=3 , a3=4 )
+# _ , r2 = fun_with_mult_args( 2 , 3 , 4 )
+# r = fun_with_mult_args( 2 , 3 , 4 ) # equally valid but returns tuple
 print( 'multiple returns example: r1: ' + str( r1 ) + ' - r2: ' + str( r2 ) )
 
 
@@ -153,7 +179,7 @@ print( 'arbitrary arguments example: ' + str( fun_with_arb_mult_args( 2 , 3, 5, 
 # %%
 
 # keyword agruments
-def fun_with_keyword_args( myname , myage=625 ): # try to reverse order
+def fun_with_keyword_args( myname , myage=-1 ): # try to reverse order
     # check the value of each incoming argument
     print( 'myage: ' + str(myage) )
     print( 'myname: ' + myname )
@@ -162,10 +188,13 @@ def fun_with_keyword_args( myname , myage=625 ): # try to reverse order
 # call function without arguments will produce error:
 # print( 'keyword arguments - no args: ' + fun_with_keyword_args() )
 # call function without initialised argument is ok
-print( 'keyword arguments - no initialized arg: ' + fun_with_keyword_args(myname='max') )
+print( 'keyword arguments - no initialized arg: ' + fun_with_keyword_args('max') )
+print( 'keyword arguments - no initialized arg: ' + fun_with_keyword_args('max', 39) )
 # call function with mixed agr order
-print( 'keyword arguments - mixed order: ' + fun_with_keyword_args(myage=4321, myname='max') )
+print( 'keyword arguments - mixed order: ' + fun_with_keyword_args(myage=39, myname='max') )
 # CAUTION: positional arguments (not initialized) need to be placed ahead of initialized
+# print( 'keyword arguments - mixed order: ' + fun_with_keyword_args(myage=39, 'max') ) # SyntaxError: positional argument follows keyword argument
+print( 'keyword arguments - no initialized arg: ' + fun_with_keyword_args('max', myage=39) )
 
 
 # %%
@@ -185,5 +214,5 @@ def fun_with_arb_dict_args( **args ):
     return s
 
 # call function
-y = fun_with_arb_dict_args( myname='max' , myage=98513 )
+y = fun_with_arb_dict_args( myage=98513, myname='max' )
 print( 'arbitrary dictionary example: ' + y )
