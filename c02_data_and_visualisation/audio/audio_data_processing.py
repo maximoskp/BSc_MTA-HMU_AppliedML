@@ -26,6 +26,9 @@ class AudioInfo:
                 del self.spectral_magnitude
                 del self.useful_bandwidth
                 del self.useful_centroid
+                del self.useful_contrast
+                del self.useful_flatness
+                del self.useful_rolloff
                 del self.useful_mask
         else:
             print('bad format')
@@ -77,17 +80,43 @@ class AudioInfo:
     # end make_features
     
     def make_useful_area_features(self):
+        tmp_features = []
         # centroid
         c = librosa.feature.spectral_centroid(self.audio, sr=self.sr, n_fft=self.n_fft, hop_length=self.hop_length)
         self.useful_centroid = c[0][ self.useful_mask == 1 ]
         self.mean_centroid = np.mean( self.useful_centroid )
         self.std_centroid = np.std( self.useful_centroid )
+        tmp_features.append(self.mean_centroid)
+        tmp_features.append(self.std_centroid)
         # bandwidth
         b = librosa.feature.spectral_bandwidth(self.audio, sr=self.sr, n_fft=self.n_fft, hop_length=self.hop_length)
         self.useful_bandwidth = b[0][ self.useful_mask == 1 ]
         self.mean_bandwidth = np.mean( self.useful_bandwidth )
         self.std_bandwidth = np.std( self.useful_bandwidth )
-        self.features = np.reshape( [self.mean_centroid, self.std_centroid, self.mean_bandwidth, self.std_bandwidth], (4,1) )
+        tmp_features.append(self.mean_bandwidth)
+        tmp_features.append(self.std_bandwidth)
+        # contrast
+        c = librosa.feature.spectral_contrast(self.audio, sr=self.sr, n_fft=self.n_fft, hop_length=self.hop_length)
+        self.useful_contrast = c[0][ self.useful_mask == 1 ]
+        self.mean_contrast = np.mean( self.useful_contrast )
+        self.std_contrast = np.std( self.useful_contrast )
+        tmp_features.append(self.mean_contrast)
+        tmp_features.append(self.std_contrast)
+        # flatness
+        f = librosa.feature.spectral_flatness(self.audio, n_fft=self.n_fft, hop_length=self.hop_length)
+        self.useful_flatness = f[0][ self.useful_mask == 1 ]
+        self.mean_flatness = np.mean( self.useful_flatness )
+        self.std_flatness = np.std( self.useful_flatness )
+        tmp_features.append(self.mean_flatness)
+        tmp_features.append(self.std_flatness)
+        # rolloff
+        f = librosa.feature.spectral_rolloff(self.audio, sr=self.sr, n_fft=self.n_fft, hop_length=self.hop_length)
+        self.useful_rolloff = f[0][ self.useful_mask == 1 ]
+        self.mean_rolloff = np.mean( self.useful_rolloff )
+        self.std_rolloff = np.std( self.useful_rolloff )
+        tmp_features.append(self.mean_rolloff)
+        tmp_features.append(self.std_rolloff)
+        self.features = np.reshape( tmp_features, (len(tmp_features),1) )
     # end make_useful_area_features
     
     def assign_category(self):

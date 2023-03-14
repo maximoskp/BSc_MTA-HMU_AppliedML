@@ -28,7 +28,7 @@ with open('data/titles.pickle', 'rb') as handle:
 with open('data/tonalities.pickle', 'rb') as handle:
     tonalities = pickle.load(handle)
 
-X_embedded = drm.reduce_dimensions(pcpsnp, method='TSNE')
+X_embedded = drm.reduce_dimensions(pcpsnp, method='MDS')
 
 # %% 
 

@@ -23,7 +23,8 @@ if not os.path.exists('data'):
 
 # %%
 
-folder = '../../data/WTC_I/'
+# folder = '../../data/WTC_I/'
+folder = '/Users/max/Documents/datasets/WTC_I/'
 files = os.listdir( folder )
 
 wtc1_structs = []

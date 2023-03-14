@@ -12,14 +12,15 @@ import librosa.display
 import numpy as np
 import matplotlib.pyplot as plt
 
-file_path = 'test_files/testBell.wav'
-# file_path = 'test_files/testKick.wav'
+# file_path = 'test_files/testBell.wav'
+file_path = 'test_files/testKick.wav'
+# file_path = 'test_files/03-01-01-01-01-01-04.wav'
 
 sr = 44100
 n_fft = 2048
 hop_length = 1024
 range_low = 20
-range_high = 10000
+range_high = 20000
 
 # load audio
 s, _ = librosa.load( file_path , sr=sr)
@@ -51,7 +52,7 @@ plt_alias.fill_between(np.linspace( 0, s.size/sr, c.size ), c - b, c + b, alpha=
 rms = librosa.feature.rms(S=spectral_magnitude)
 rms = rms[0]
 
-plt_alias.plot( np.linspace( 0, s.size/sr, rms.size ), range_high*rms , 'r' )
+plt_alias.plot( np.linspace( 0, s.size/sr, rms.size ), 10000*rms , 'r' )
 
 # %% mask useful part
 

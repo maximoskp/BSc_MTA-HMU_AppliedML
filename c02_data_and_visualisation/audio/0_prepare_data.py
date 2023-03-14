@@ -24,7 +24,8 @@ if not os.path.exists('data'):
 # %%
 
 # CAUTION: need to remove MaxV - Guiro.wav from Roland JV 1080
-folder = '../../data/drumMachines200/'
+# folder = '../../data/drumMachines200/'
+folder = '/Users/max/repos/MSc_MTA_HMU_AppliedML/data/drumMachines200/'
 subfolders = os.listdir( folder )
 
 audio_structs = []
